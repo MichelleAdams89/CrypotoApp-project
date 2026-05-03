@@ -1,6 +1,6 @@
-import AdvancedImg from "../assets/Advanced.png";
-import ZeroFees from "../assets/zero_fees_us.png";
-import CB from "../assets/CB_LOLP__1_.png";
+import AdvancedImg from "../../assets/Advanced.png";
+import ZeroFees from "../../assets/zero_fees_us.png";
+import CB from "../../assets/CB_LOLP__1_.png";
 
 const GridSection = () => {
   return (

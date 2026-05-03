@@ -4,6 +4,9 @@ export default function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-12 md:py-16">
+         <div>
+          <h2 className="text-lg font-semibold text-center pb-4 mt-1 text-red-500">Disclaimer:  It is a demo project and users should not enter real personal information.</h2>
+        </div>
         {/* Main footer content: logo + columns */}
         <div className="flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16 mb-8 sm:mb-12">
           {/* Logo - hidden on mobile, shown on tablet+ */}

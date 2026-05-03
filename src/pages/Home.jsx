@@ -21,7 +21,7 @@ import HomeSignUpSection from "../components/crypto/HomeSignUpSection";
  */
 const Home = () => {
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white text-gray-900 pt-32 md:pt-[144px]">
       {/* Header / Navigation (always visible) */}
       <header>
         <NavBar />

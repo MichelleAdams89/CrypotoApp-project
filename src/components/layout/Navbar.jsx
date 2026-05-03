@@ -14,6 +14,7 @@ import CompanyDropdown from "./navBarSections/CompanyDropdown";
 import DeveloperDropDown from "./navBarSections/DeveloperDropDown";
 import IndividualsDropdown from "./navBarSections/IndividualsDropdown";
 import InstitutionsDropdown from "./navBarSections/InstitutionsDropdown";
+import WarningBanner from "../warningBanner";
 
 const NavBar = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -23,12 +24,12 @@ const NavBar = () => {
   const closeTimer = useRef(null);
 
   const navSections = [
-    { name: "Cryptocurrencies", component: null },
-    { name: "Individuals", component: <IndividualsDropdown /> },
-    { name: "Business", component: <BusinessDropDown /> },
-    { name: "Institutions", component: <InstitutionsDropdown /> },
-    { name: "Developers", component: <DeveloperDropDown /> },
-    { name: "Company", component: <CompanyDropdown /> },
+    { name: "Cryptocurrencies", path:"/explore" ,component: null },
+    { name: "Individuals", path:"/individuals", component: <IndividualsDropdown /> },
+    { name: "Business", path:"/business", component: <BusinessDropDown /> },
+    { name: "Institutions", path:"/institutions", component: <InstitutionsDropdown /> },
+    { name: "Developers", path:"/developers", component: <DeveloperDropDown /> },
+    { name: "Company", path:"/company", component: <CompanyDropdown /> },
   ];
 
   // Icons for menu items
@@ -443,35 +444,64 @@ const NavBar = () => {
           onKeyDown={(e) => {
             if (e.key === "Escape") closeMobileMenu();
           }}
-          className="fixed inset-0 top-20 z-40 bg-black/50 lg:hidden cursor-default"
+          className="fixed inset-0 top-16 md:top-20 z-40 bg-black/50 lg:hidden cursor-default"
           aria-label="Close mobile menu"
         />
       )}
 
       {mobileMenuOpen && (
-        <div className="fixed left-0 right-0 top-20 z-50 bg-white lg:hidden h-[calc(100vh-80px)] flex flex-col">
+        <div className="fixed left-0 right-0 top-16 md:top-20 z-50 bg-white lg:hidden h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] flex flex-col">
           <div className="overflow-y-auto flex-1">
             {mobileMenuLevel === "main" && (
               <div className="flex flex-col">
                 {navSections.map((item) => (
-                  <button
-                    key={item.name}
-                    type="button"
-                    onClick={() => {
-                      if (mobileMenuCategories[item.name]) {
-                        handleCategoryClick(item.name);
-                      } else {
-                        handleLinkClick();
-                      }
-                    }}
-                    className="w-full px-4 py-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 font-semibold text-gray-900 flex items-center justify-between"
-                  >
-                    {item.name}
-                    {mobileMenuCategories[item.name] && (
-                      <ChevronRightIcon className="w-5 h-5 text-gray-400" />
+                  <div key={item.name}>
+                    {item.path && !item.component ? (
+                      <Link
+                        to={item.path}
+                        onClick={handleLinkClick}
+                        className="w-full px-4 py-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 font-semibold text-gray-900 flex items-center justify-between block"
+                      >
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (mobileMenuCategories[item.name]) {
+                            handleCategoryClick(item.name);
+                          } else {
+                            handleLinkClick();
+                          }
+                        }}
+                        className="w-full px-4 py-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 font-semibold text-gray-900 flex items-center justify-between"
+                      >
+                        {item.name}
+                        {mobileMenuCategories[item.name] && (
+                          <ChevronRightIcon className="w-5 h-5 text-gray-400" />
+                        )}
+                      </button>
                     )}
-                  </button>
+                  </div>
                 ))}
+
+                {/* Mobile Sign In/Sign Up Buttons */}
+                <div className="mt-6 pt-4 border-t border-gray-100">
+                  <Link
+                    to="/signin"
+                    onClick={handleLinkClick}
+                    className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors font-semibold text-gray-900 block mb-2"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/signup"
+                    onClick={handleLinkClick}
+                    className="w-full px-4 py-3 bg-blue-600 text-white text-center hover:bg-blue-700 transition-colors font-semibold rounded-full block"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
               </div>
             )}
 
@@ -501,7 +531,7 @@ const NavBar = () => {
         </div>
       )}
 
-      <nav className="flex items-center justify-between h-16 md:h-20 border-b border-gray-300 relative z-50 px-4 sm:px-6 md:px-8 lg:px-12">
+      <nav className="fixed top-16 left-0 right-0 w-full flex items-center justify-between h-16 md:h-20 border-b border-gray-300 bg-white z-50 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="flex-shrink-0">
           {mobileMenuOpen && mobileMenuLevel === "category" ? (
             <button
@@ -533,7 +563,13 @@ const NavBar = () => {
                 onMouseEnter={() => handleMouseEnter(item.name)}
                 onMouseLeave={handleMouseLeave}
               >
-                {item.name}
+                {item.path && !item.component ? (
+                  <Link to={item.path} className="text-gray-900 hover:text-blue-600">
+                    {item.name}
+                  </Link>
+                ) : (
+                  item.name
+                )}
               </li>
             ))}
           </ul>
@@ -563,12 +599,12 @@ const NavBar = () => {
             Sign In
           </Link>
 
-          <button
-            type="button"
+          <Link
+            to="/signup"
             className="bg-blue-600 text-white font-bold py-2 px-4 md:px-6 rounded-full hover:bg-blue-700 transition-colors text-sm md:text-base"
           >
             Sign Up
-          </button>
+          </Link>
 
           <button
             type="button"
