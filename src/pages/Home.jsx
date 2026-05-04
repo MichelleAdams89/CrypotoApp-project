@@ -1,4 +1,4 @@
-import NavBar from "../components/layout/NavBar";
+import NavBar from "../components/layout/Navbar";
 import HeroSection from "../components/crypto/HeroSection";
 import CryptoTickerSection from "../components/crypto/CryptoTickerSection";
 import GridSection from "../components/crypto/GridSection";
