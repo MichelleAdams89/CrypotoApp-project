@@ -14,7 +14,7 @@ import CompanyDropdown from "./navBarSections/CompanyDropdown";
 import DeveloperDropDown from "./navBarSections/DeveloperDropDown";
 import IndividualsDropdown from "./navBarSections/IndividualsDropdown";
 import InstitutionsDropdown from "./navBarSections/InstitutionsDropdown";
-import WarningBanner from "../warningBanner";
+import WarningBanner from "../WarningBanner";
 
 const NavBar = () => {
   const [activeItem, setActiveItem] = useState(null);
